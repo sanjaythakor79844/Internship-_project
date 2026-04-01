@@ -104,12 +104,19 @@ def load_model():
     try:
         import os
         base = os.path.dirname(os.path.abspath(__file__))
-        model      = pickle.load(open(os.path.join(base, 'best_model.pkl'), 'rb'))
-        encoders   = pickle.load(open(os.path.join(base, 'encoders.pkl'), 'rb'))
-        model_info = pickle.load(open(os.path.join(base, 'model_info.pkl'), 'rb'))
+        model_path    = os.path.join(base, 'best_model.pkl')
+        encoders_path = os.path.join(base, 'encoders.pkl')
+        info_path     = os.path.join(base, 'model_info.pkl')
+
+        with open(model_path, 'rb') as f:
+            model = pickle.load(f)
+        with open(encoders_path, 'rb') as f:
+            encoders = pickle.load(f)
+        with open(info_path, 'rb') as f:
+            model_info = pickle.load(f)
         return model, encoders, model_info
-    except FileNotFoundError:
-        st.error("⚠️ Model files not found! Please run the training notebook first.")
+    except Exception as e:
+        st.error(f"⚠️ Error loading model: {e}")
         return None, None, None
 
 @st.cache_data
@@ -117,9 +124,10 @@ def load_data():
     try:
         import os
         base = os.path.dirname(os.path.abspath(__file__))
-        return pd.read_csv(os.path.join(base, 'insurance (1).csv'))
-    except FileNotFoundError:
-        st.error("⚠️ Dataset not found!")
+        csv_path = os.path.join(base, 'insurance (1).csv')
+        return pd.read_csv(csv_path)
+    except Exception as e:
+        st.error(f"⚠️ Dataset not found: {e}")
         return None
 
 @st.cache_data
