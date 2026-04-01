@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-import pickle
+import joblib
 import plotly.express as px
 import plotly.graph_objects as go
 
@@ -104,16 +104,9 @@ def load_model():
     try:
         import os
         base = os.path.dirname(os.path.abspath(__file__))
-        model_path    = os.path.join(base, 'best_model.pkl')
-        encoders_path = os.path.join(base, 'encoders.pkl')
-        info_path     = os.path.join(base, 'model_info.pkl')
-
-        with open(model_path, 'rb') as f:
-            model = pickle.load(f)
-        with open(encoders_path, 'rb') as f:
-            encoders = pickle.load(f)
-        with open(info_path, 'rb') as f:
-            model_info = pickle.load(f)
+        model      = joblib.load(os.path.join(base, 'best_model.pkl'))
+        encoders   = joblib.load(os.path.join(base, 'encoders.pkl'))
+        model_info = joblib.load(os.path.join(base, 'model_info.pkl'))
         return model, encoders, model_info
     except Exception as e:
         st.error(f"⚠️ Error loading model: {e}")
