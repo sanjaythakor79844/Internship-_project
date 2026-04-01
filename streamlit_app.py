@@ -102,9 +102,11 @@ st.markdown("""
 @st.cache_resource
 def load_model():
     try:
-        model      = pickle.load(open('best_model.pkl', 'rb'))
-        encoders   = pickle.load(open('encoders.pkl', 'rb'))
-        model_info = pickle.load(open('model_info.pkl', 'rb'))
+        import os
+        base = os.path.dirname(os.path.abspath(__file__))
+        model      = pickle.load(open(os.path.join(base, 'best_model.pkl'), 'rb'))
+        encoders   = pickle.load(open(os.path.join(base, 'encoders.pkl'), 'rb'))
+        model_info = pickle.load(open(os.path.join(base, 'model_info.pkl'), 'rb'))
         return model, encoders, model_info
     except FileNotFoundError:
         st.error("⚠️ Model files not found! Please run the training notebook first.")
@@ -113,7 +115,9 @@ def load_model():
 @st.cache_data
 def load_data():
     try:
-        return pd.read_csv('insurance (1).csv')
+        import os
+        base = os.path.dirname(os.path.abspath(__file__))
+        return pd.read_csv(os.path.join(base, 'insurance (1).csv'))
     except FileNotFoundError:
         st.error("⚠️ Dataset not found!")
         return None
