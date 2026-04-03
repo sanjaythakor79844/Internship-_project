@@ -7,7 +7,7 @@ import plotly.graph_objects as go
 
 st.set_page_config(
     page_title="Insurance Premium Predictor",
-    page_icon="≡ƒÅÑ",
+    page_icon="🏥",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -143,21 +143,21 @@ results_df = get_model_results()
 
 # ΓöÇΓöÇ SIDEBAR ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
 with st.sidebar:
-    st.markdown("## ≡ƒÅÑ Insurance Predictor")
+    st.markdown("## 🏥 Insurance Predictor")
     st.markdown("*Student ML Project*")
     st.markdown("---")
 
     # Card-style navigation using session state
     if 'page' not in st.session_state:
-        st.session_state.page = "≡ƒÅá Home"
+        st.session_state.page = "🏠 Home"
 
     nav_items = [
-        ("≡ƒÅá", "Home"),
-        ("≡ƒôè", "Dashboard"),
-        ("≡ƒö«", "Predict"),
-        ("≡ƒôê", "Analysis"),
-        ("≡ƒñû", "Models"),
-        ("Γä╣∩╕Å", "About"),
+        ("🏠", "Home"),
+        ("📊", "Dashboard"),
+        ("🔮", "Predict"),
+        ("📈", "Analysis"),
+        ("🤖", "Models"),
+        ("ℹ️", "About"),
     ]
 
     for icon, label in nav_items:
@@ -175,13 +175,13 @@ with st.sidebar:
     st.markdown("---")
 
     if model_info:
-        st.markdown("### ≡ƒôê Model Performance")
+        st.markdown("### 📈 Model Performance")
         st.metric("Best Model", model_info['model_name'])
         st.metric("Accuracy",   f"{model_info['r2_score']*100:.1f}%")
         st.metric("Avg Error",  f"${model_info['mae']:.0f}")
 
     st.markdown("---")
-    st.markdown("### ≡ƒæ¿ΓÇì≡ƒÄô Project By")
+    st.markdown("### 👨‍👩‍👧ΓÇì≡ƒÄô Project By")
     st.markdown("**Sanjay Thakor**")
     st.markdown("Roll No: 220390107031")
     st.markdown("Course: ML Internship")
@@ -190,21 +190,21 @@ with st.sidebar:
     st.markdown("*Made with Γ¥ñ∩╕Å using Python*")
 
 # ΓöÇΓöÇ HOME ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
-if page == "≡ƒÅá Home":
-    st.markdown('<div class="main-header">≡ƒÅÑ Insurance Premium Predictor</div>', unsafe_allow_html=True)
+if page == "🏠 Home":
+    st.markdown('<div class="main-header">🏥 Insurance Premium Predictor</div>', unsafe_allow_html=True)
 
     c1, c2, c3 = st.columns(3)
     with c1:
-        st.markdown('<div class="metric-card"><h2>≡ƒôè Data-Driven</h2><p>1,338 real insurance records</p></div>', unsafe_allow_html=True)
+        st.markdown('<div class="metric-card"><h2>📊 Data-Driven</h2><p>1,338 real insurance records</p></div>', unsafe_allow_html=True)
     with c2:
-        st.markdown('<div class="metric-card"><h2>≡ƒÄ» Accurate</h2><p>87%+ prediction accuracy</p></div>', unsafe_allow_html=True)
+        st.markdown('<div class="metric-card"><h2>🎯 Accurate</h2><p>87%+ prediction accuracy</p></div>', unsafe_allow_html=True)
     with c3:
         st.markdown('<div class="metric-card"><h2>ΓÜí Fast</h2><p>Instant predictions</p></div>', unsafe_allow_html=True)
 
     st.markdown("---")
     c1, c2 = st.columns(2)
     with c1:
-        st.markdown("### ≡ƒÄ» Features")
+        st.markdown("### 🎯 Features")
         st.markdown("""
         - Real-time insurance charge prediction
         - Interactive data visualizations
@@ -213,7 +213,7 @@ if page == "≡ƒÅá Home":
         - Personalized health recommendations
         """)
     with c2:
-        st.markdown("### ≡ƒÜÇ How It Works")
+        st.markdown("### ⚡ How It Works")
         st.markdown("""
         1. **Input** your details (age, BMI, smoking status, etc.)
         2. **AI Model** analyzes your information
@@ -224,8 +224,8 @@ if page == "≡ƒÅá Home":
     st.info("≡ƒÆí Use the sidebar to navigate to different sections!")
 
 # ΓöÇΓöÇ DASHBOARD ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
-elif page == "≡ƒôè Dashboard":
-    st.markdown('<div class="main-header">≡ƒôè Data Insights Dashboard</div>', unsafe_allow_html=True)
+elif page == "📊 Dashboard":
+    st.markdown('<div class="main-header">📊 Data Insights Dashboard</div>', unsafe_allow_html=True)
 
     if df is None:
         st.error("Dataset not found!")
@@ -240,7 +240,7 @@ elif page == "≡ƒôè Dashboard":
     st.markdown("---")
 
     # Filter widget for interactivity
-    with st.expander("≡ƒöº Filter Data", expanded=False):
+    with st.expander("🔧 Filter Data", expanded=False):
         fc1, fc2, fc3 = st.columns(3)
         smoker_filter = fc1.multiselect("Smoker", ["yes","no"], default=["yes","no"])
         sex_filter    = fc2.multiselect("Gender", ["male","female"], default=["male","female"])
@@ -266,7 +266,7 @@ elif page == "≡ƒôè Dashboard":
     with c2:
         smoker_avg = dff.groupby('smoker')['charges'].mean().reset_index()
         fig = px.bar(smoker_avg, x='smoker', y='charges',
-                     title='≡ƒÜ¼ Avg Premium by Smoking Status',
+                     title='🚬 Avg Premium by Smoking Status',
                      color='smoker',
                      color_discrete_map={'yes':'#f5576c','no':'#667eea'},
                      labels={'smoker':'Smoking Status','charges':'Avg Premium ($)'},
@@ -286,7 +286,7 @@ elif page == "≡ƒôè Dashboard":
 
     with c2:
         fig = px.scatter(dff, x='bmi', y='charges', color='smoker',
-                         title='ΓÜû∩╕Å BMI vs Premium',
+                         title='⚖️ BMI vs Premium',
                          color_discrete_map={'yes':'#f5576c','no':'#667eea'},
                          labels={'bmi':'BMI','charges':'Premium ($)','smoker':'Smoker'},
                          opacity=0.6, hover_data=['age','children','region'])
@@ -297,7 +297,7 @@ elif page == "≡ƒôè Dashboard":
     with c1:
         region_avg = dff.groupby('region')['charges'].mean().reset_index()
         fig = px.bar(region_avg, x='region', y='charges',
-                     title='≡ƒù║∩╕Å Avg Premium by Region',
+                     title='🗺️ Avg Premium by Region',
                      color='charges', color_continuous_scale='Blues',
                      labels={'region':'Region','charges':'Avg Premium ($)'})
         fig.update_layout(showlegend=False, height=350, plot_bgcolor='white')
@@ -314,8 +314,8 @@ elif page == "≡ƒôè Dashboard":
         st.plotly_chart(fig, use_container_width=True)
 
 # ΓöÇΓöÇ PREDICT ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
-elif page == "≡ƒö« Predict":
-    st.markdown('<div class="main-header">≡ƒö« Premium Predictor</div>', unsafe_allow_html=True)
+elif page == "🔮 Predict":
+    st.markdown('<div class="main-header">🔮 Premium Predictor</div>', unsafe_allow_html=True)
 
     if model is None:
         st.error("ΓÜá∩╕Å Model not found! Please run the training notebook first.")
@@ -324,15 +324,15 @@ elif page == "≡ƒö« Predict":
     st.markdown("### Enter Your Details:")
     c1, c2 = st.columns(2)
     with c1:
-        age      = st.slider("≡ƒÄé Age", 18, 100, 30)
-        bmi      = st.slider("ΓÜû∩╕Å BMI", 10.0, 60.0, 25.0, 0.1)
+        age      = st.slider("💰 Age", 18, 100, 30)
+        bmi      = st.slider("⚖️ BMI", 10.0, 60.0, 25.0, 0.1)
         children = st.selectbox("≡ƒæ╢ Number of Children", [0,1,2,3,4,5])
     with c2:
         sex    = st.selectbox("≡ƒæñ Gender", ["male","female"])
-        smoker = st.selectbox("≡ƒÜ¼ Do you smoke?", ["no","yes"])
-        region = st.selectbox("≡ƒù║∩╕Å Region", ["northeast","northwest","southeast","southwest"])
+        smoker = st.selectbox("🚬 Do you smoke?", ["no","yes"])
+        region = st.selectbox("🗺️ Region", ["northeast","northwest","southeast","southwest"])
 
-    if st.button("≡ƒö« Predict My Premium", type="primary"):
+    if st.button("🔮 Predict My Premium", type="primary"):
         sex_encoded    = encoders['sex'].transform([sex])[0]
         smoker_encoded = encoders['smoker'].transform([smoker])[0]
         region_encoded = encoders['region'].transform([region])[0]
@@ -356,7 +356,7 @@ elif page == "≡ƒö« Predict":
         c1, c2 = st.columns(2)
         with c1:
             if smoker == 'yes':
-                st.warning("≡ƒÜ¡ Quitting smoking could save you $15,000+ annually!")
+                st.warning("🚭 Quitting smoking could save you $15,000+ annually!")
             else:
                 st.success("Γ£à Non-smoker ΓÇö you're saving a lot already!")
             if bmi > 30:
@@ -365,15 +365,15 @@ elif page == "≡ƒö« Predict":
                 st.success("Γ£à Healthy BMI ΓÇö great for lower costs!")
         with c2:
             if age > 50:
-                st.info("≡ƒÅÑ Regular health checkups help manage costs.")
+                st.info("🏥 Regular health checkups help manage costs.")
             if children >= 3:
-                st.info("≡ƒæ¿ΓÇì≡ƒæ⌐ΓÇì≡ƒæº More dependents slightly increase premium.")
+                st.info("👨‍👩‍👧ΓÇì≡ƒæ⌐ΓÇì≡ƒæº More dependents slightly increase premium.")
             if smoker == 'no' and bmi <= 25:
-                st.success("≡ƒîƒ You're in the lowest risk category!")
+                st.success("🌟 You're in the lowest risk category!")
 
 # ΓöÇΓöÇ ANALYSIS ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
-elif page == "≡ƒôê Analysis":
-    st.markdown('<div class="main-header">≡ƒôê Deep Data Analysis</div>', unsafe_allow_html=True)
+elif page == "📈 Analysis":
+    st.markdown('<div class="main-header">📈 Deep Data Analysis</div>', unsafe_allow_html=True)
     st.markdown("*Understanding WHY premiums vary ΓÇö statistical insights & feature relationships*")
 
     if df is None:
@@ -397,7 +397,7 @@ elif page == "≡ƒôê Analysis":
     st.markdown("---")
 
     # 2. Smoking deep dive
-    st.markdown("### ≡ƒÜ¼ Smoking Impact ΓÇö The #1 Cost Driver")
+    st.markdown("### 🚬 Smoking Impact ΓÇö The #1 Cost Driver")
     s_avg  = df[df['smoker']=='yes']['charges'].mean()
     ns_avg = df[df['smoker']=='no']['charges'].mean()
     diff   = s_avg - ns_avg
@@ -464,9 +464,9 @@ elif page == "≡ƒôê Analysis":
     st.markdown("---")
 
     # 4. Summary table
-    st.markdown("### ≡ƒôè Feature Importance Summary")
+    st.markdown("### 📊 Feature Importance Summary")
     summary = pd.DataFrame({
-        'Feature'     : ['≡ƒÜ¼ Smoker','≡ƒôà Age','ΓÜû∩╕Å BMI','≡ƒæ╢ Children','≡ƒæñ Gender','≡ƒù║∩╕Å Region'],
+        'Feature'     : ['🚬 Smoker','≡ƒôà Age','⚖️ BMI','≡ƒæ╢ Children','≡ƒæñ Gender','🗺️ Region'],
         'Correlation' : [0.79, 0.30, 0.20, 0.07, 0.06, 0.01],
         'Impact Level': ['Very High','Moderate','Moderate','Low','Very Low','Negligible'],
         'Insight'     : [
@@ -484,10 +484,10 @@ elif page == "≡ƒôê Analysis":
     df.drop(columns=['age_group','bmi_cat'], inplace=True, errors='ignore')
 
 # ΓöÇΓöÇ MODELS ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
-elif page == "≡ƒñû Models":
-    st.markdown('<div class="main-header">≡ƒñû Model Comparison</div>', unsafe_allow_html=True)
+elif page == "🤖 Models":
+    st.markdown('<div class="main-header">🤖 Model Comparison</div>', unsafe_allow_html=True)
 
-    st.markdown("### ≡ƒôè All 6 Models I Tested")
+    st.markdown("### 📊 All 6 Models I Tested")
     st.markdown("I compared 6 different algorithms to find the best one for predicting insurance premiums.")
 
     st.dataframe(results_df, use_container_width=True, hide_index=True)
@@ -529,7 +529,7 @@ elif page == "≡ƒñû Models":
         """)
     with c2:
         st.info("""
-        **≡ƒôê Key Patterns:**
+        **📈 Key Patterns:**
         - Ensemble methods (GB, RF) performed best
         - Linear models were surprisingly competitive
         - Single Decision Tree overfits badly (72%)
@@ -545,8 +545,8 @@ elif page == "≡ƒñû Models":
     """)
 
 # ΓöÇΓöÇ ABOUT ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
-elif page == "Γä╣∩╕Å About":
-    st.markdown('<div class="main-header">Γä╣∩╕Å About This Project</div>', unsafe_allow_html=True)
+elif page == "ℹ️ About":
+    st.markdown('<div class="main-header">ℹ️ About This Project</div>', unsafe_allow_html=True)
 
     # Top banner cards
     c1, c2, c3, c4 = st.columns(4)
@@ -554,7 +554,7 @@ elif page == "Γä╣∩╕Å About":
         st.markdown("""
         <div style='background:linear-gradient(135deg,#667eea,#764ba2);
                     border-radius:12px;padding:1.2rem;text-align:center;color:white;'>
-            <div style='font-size:2rem;'>≡ƒôè</div>
+            <div style='font-size:2rem;'>📊</div>
             <div style='font-size:1.5rem;font-weight:800;'>1,338</div>
             <div style='font-size:0.85rem;opacity:0.85;'>Records Analyzed</div>
         </div>""", unsafe_allow_html=True)
@@ -562,7 +562,7 @@ elif page == "Γä╣∩╕Å About":
         st.markdown("""
         <div style='background:linear-gradient(135deg,#11998e,#38ef7d);
                     border-radius:12px;padding:1.2rem;text-align:center;color:white;'>
-            <div style='font-size:2rem;'>≡ƒÄ»</div>
+            <div style='font-size:2rem;'>🎯</div>
             <div style='font-size:1.5rem;font-weight:800;'>87.67%</div>
             <div style='font-size:0.85rem;opacity:0.85;'>Model Accuracy</div>
         </div>""", unsafe_allow_html=True)
@@ -570,7 +570,7 @@ elif page == "Γä╣∩╕Å About":
         st.markdown("""
         <div style='background:linear-gradient(135deg,#f093fb,#f5576c);
                     border-radius:12px;padding:1.2rem;text-align:center;color:white;'>
-            <div style='font-size:2rem;'>≡ƒñû</div>
+            <div style='font-size:2rem;'>🤖</div>
             <div style='font-size:1.5rem;font-weight:800;'>6</div>
             <div style='font-size:0.85rem;opacity:0.85;'>ML Models Tested</div>
         </div>""", unsafe_allow_html=True)
@@ -590,7 +590,7 @@ elif page == "Γä╣∩╕Å About":
         st.markdown("""
         <div style='background:white;border-radius:14px;padding:1.5rem;
                     box-shadow:0 2px 12px rgba(0,0,0,0.08);margin-bottom:1rem;'>
-            <h3 style='color:#1f77b4;margin-top:0;'>≡ƒÄ» Project Overview</h3>
+            <h3 style='color:#1f77b4;margin-top:0;'>🎯 Project Overview</h3>
             <p style='color:#444;line-height:1.7;'>
             SmartPolicy is an end-to-end machine learning project that predicts annual
             insurance premium charges based on personal health and demographic information.
@@ -630,7 +630,7 @@ elif page == "Γä╣∩╕Å About":
         st.markdown("""
         <div style='background:white;border-radius:14px;padding:1.5rem;
                     box-shadow:0 2px 12px rgba(0,0,0,0.08);'>
-            <h3 style='color:#1f77b4;margin-top:0;'>≡ƒôè Dataset</h3>
+            <h3 style='color:#1f77b4;margin-top:0;'>📊 Dataset</h3>
             <p style='color:#444;margin:0;'>
             ΓÇó <b>1,338 records</b> from real insurance customers<br>
             ΓÇó <b>6 input features:</b> Age, Sex, BMI, Children, Smoker, Region<br>
@@ -643,11 +643,11 @@ elif page == "Γä╣∩╕Å About":
         st.markdown("""
         <div style='background:linear-gradient(135deg,#1a1a2e,#16213e);
                     border-radius:14px;padding:1.5rem;color:white;margin-bottom:1rem;'>
-            <h3 style='margin-top:0;color:white;'>≡ƒæ¿ΓÇì≡ƒÄô Student Info</h3>
+            <h3 style='margin-top:0;color:white;'>👨‍👩‍👧ΓÇì≡ƒÄô Student Info</h3>
             <p style='margin:6px 0;'>≡ƒæñ <b>Sanjay Thakor</b></p>
             <p style='margin:6px 0;'>≡ƒÄô Roll No: 220390107031</p>
             <p style='margin:6px 0;'>≡ƒôÜ Course: ML Internship</p>
-            <p style='margin:6px 0;'>≡ƒæ¿ΓÇì≡ƒÅ½ Guide: Prof. Akshay Kansara</p>
+            <p style='margin:6px 0;'>👨‍👩‍👧ΓÇì≡ƒÅ½ Guide: Prof. Akshay Kansara</p>
             <p style='margin:6px 0;'>≡ƒôà Year: 2026</p>
         </div>""", unsafe_allow_html=True)
 
@@ -655,11 +655,11 @@ elif page == "Γä╣∩╕Å About":
         <div style='background:white;border-radius:14px;padding:1.5rem;
                     box-shadow:0 2px 12px rgba(0,0,0,0.08);margin-bottom:1rem;'>
             <h3 style='color:#1f77b4;margin-top:0;'>≡ƒöì Key Discoveries</h3>
-            <p style='color:#444;margin:6px 0;'>≡ƒÜ¼ Smokers pay <b>280% more</b></p>
+            <p style='color:#444;margin:6px 0;'>🚬 Smokers pay <b>280% more</b></p>
             <p style='color:#444;margin:6px 0;'>≡ƒôà Age increases cost gradually</p>
-            <p style='color:#444;margin:6px 0;'>ΓÜû∩╕Å Higher BMI = higher premium</p>
-            <p style='color:#444;margin:6px 0;'>≡ƒñû Gradient Boosting = best model</p>
-            <p style='color:#444;margin:6px 0;'>≡ƒöº Feature engineering improved accuracy</p>
+            <p style='color:#444;margin:6px 0;'>⚖️ Higher BMI = higher premium</p>
+            <p style='color:#444;margin:6px 0;'>🤖 Gradient Boosting = best model</p>
+            <p style='color:#444;margin:6px 0;'>🔧 Feature engineering improved accuracy</p>
         </div>""", unsafe_allow_html=True)
 
         st.markdown("""
