@@ -94,6 +94,7 @@ with st.sidebar:
         ("🔮", "Predict"),
         ("📈", "Analysis"),
         ("🤖", "Models"),
+        ("📂", "Bulk Scanner"),
         ("ℹ️",  "About"),
     ]
 
@@ -389,6 +390,190 @@ elif page == "🤖 Models":
     3. **Tested** tree-based models (Decision Tree, Random Forest, Gradient Boosting)
     4. **Selected** Gradient Boosting - best accuracy at 87.67% with $2,425 avg error
     """)
+
+
+elif page == "📂 Bulk Scanner":
+    st.markdown('<div class="main-header">📂 Bulk Insurance Scanner</div>', unsafe_allow_html=True)
+    st.markdown("*Upload a file with multiple records and get predictions for all at once*")
+
+    if model is None:
+        st.error("⚠️ Model not found! Please run the training notebook first.")
+        st.stop()
+
+    # Step 1: Download Sample File
+    st.markdown("---")
+    c1, c2, c3 = st.columns(3)
+
+    with c1:
+        st.markdown("""
+        <div style='border-left:4px solid #38ef7d;padding:0.8rem 1rem;background:rgba(56,239,125,0.05);border-radius:0 8px 8px 0;'>
+            <b style='color:#38ef7d;'>📥 Step 1</b><br>
+            <span style='font-size:0.9rem;'>Download Sample File</span>
+        </div>""", unsafe_allow_html=True)
+    with c2:
+        st.markdown("""
+        <div style='border-left:4px solid #667eea;padding:0.8rem 1rem;background:rgba(102,126,234,0.05);border-radius:0 8px 8px 0;'>
+            <b style='color:#667eea;'>📤 Step 2</b><br>
+            <span style='font-size:0.9rem;'>Upload File to Scan</span>
+        </div>""", unsafe_allow_html=True)
+    with c3:
+        st.markdown("""
+        <div style='border-left:4px solid #f5576c;padding:0.8rem 1rem;background:rgba(245,87,108,0.05);border-radius:0 8px 8px 0;'>
+            <b style='color:#f5576c;'>📊 Step 3</b><br>
+            <span style='font-size:0.9rem;'>Download Scanned Results</span>
+        </div>""", unsafe_allow_html=True)
+
+    st.markdown("---")
+
+    # File format selector + sample download
+    col1, col2 = st.columns([1, 2])
+
+    with col1:
+        st.markdown("### 📋 File Format")
+        file_format = st.selectbox("Select format:", ["CSV", "Excel (XLSX)", "JSON", "SQL"], label_visibility="collapsed")
+
+        # Generate sample data
+        import io
+        sample_data = pd.DataFrame({
+            "age"     : [25, 35, 45, 55, 30],
+            "sex"     : ["male","female","male","female","male"],
+            "bmi"     : [22.0, 28.5, 31.2, 25.0, 27.8],
+            "children": [0, 1, 2, 3, 0],
+            "smoker"  : ["no","no","yes","no","yes"],
+            "region"  : ["northeast","northwest","southeast","southwest","northeast"]
+        })
+
+        if file_format == "CSV":
+            sample_bytes = sample_data.to_csv(index=False).encode("utf-8")
+            st.download_button("📥 Download Sample CSV", sample_bytes,
+                               "sample_insurance.csv", "text/csv", use_container_width=True)
+        elif file_format == "Excel (XLSX)":
+            buf = io.BytesIO()
+            sample_data.to_excel(buf, index=False)
+            st.download_button("📥 Download Sample XLSX", buf.getvalue(),
+                               "sample_insurance.xlsx",
+                               "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                               use_container_width=True)
+        elif file_format == "JSON":
+            sample_bytes = sample_data.to_json(orient="records", indent=2).encode("utf-8")
+            st.download_button("📥 Download Sample JSON", sample_bytes,
+                               "sample_insurance.json", "application/json", use_container_width=True)
+        elif file_format == "SQL":
+            rows = []
+            for _, r in sample_data.iterrows():
+                rows.append(f"INSERT INTO insurance (age, sex, bmi, children, smoker, region) VALUES ({r['age']}, '{r['sex']}', {r['bmi']}, {r['children']}, '{r['smoker']}', '{r['region']}');")
+            sql_text = "-- Sample SQL Insert Statements\n" + "\n".join(rows)
+            st.download_button("📥 Download Sample SQL", sql_text.encode("utf-8"),
+                               "sample_insurance.sql", "text/plain", use_container_width=True)
+
+    with col2:
+        st.markdown("### 📤 Upload File to Scan")
+        accept_types = {
+            "CSV"         : ["csv"],
+            "Excel (XLSX)": ["xlsx"],
+            "JSON"        : ["json"],
+            "SQL"         : ["sql", "txt"]
+        }
+        uploaded_file = st.file_uploader(
+            f"Drag and drop or browse your {file_format} file",
+            type=accept_types[file_format],
+            help="File must contain columns: age, sex, bmi, children, smoker, region"
+        )
+
+    # Process uploaded file
+    if uploaded_file is not None:
+        try:
+            # Load based on format
+            if file_format == "CSV":
+                input_df = pd.read_csv(uploaded_file)
+            elif file_format == "Excel (XLSX)":
+                input_df = pd.read_excel(uploaded_file)
+            elif file_format == "JSON":
+                input_df = pd.read_json(uploaded_file)
+            elif file_format == "SQL":
+                import re
+                content_sql = uploaded_file.read().decode("utf-8")
+                rows_sql = re.findall(
+                    r"VALUES\s*\(\s*(\d+),\s*'(\w+)',\s*([\d.]+),\s*(\d+),\s*'(\w+)',\s*'(\w+)'\s*\)",
+                    content_sql, re.IGNORECASE
+                )
+                if rows_sql:
+                    input_df = pd.DataFrame(rows_sql, columns=["age","sex","bmi","children","smoker","region"])
+                    input_df["age"]      = input_df["age"].astype(int)
+                    input_df["bmi"]      = input_df["bmi"].astype(float)
+                    input_df["children"] = input_df["children"].astype(int)
+                else:
+                    st.error("Could not parse SQL file. Please use the sample format.")
+                    st.stop()
+
+            st.success(f"✅ File loaded: {len(input_df):,} records found")
+
+            # Validate required columns
+            required = ["age","sex","bmi","children","smoker","region"]
+            missing_cols = [c for c in required if c not in input_df.columns]
+            if missing_cols:
+                st.error(f"⚠️ Missing columns: {missing_cols}")
+                st.stop()
+
+            st.markdown("### 📋 Preview (first 5 rows)")
+            st.dataframe(input_df.head(), use_container_width=True)
+
+            # Run predictions
+            with st.spinner("🤖 Running predictions on all records..."):
+                results_list = []
+                for _, row in input_df.iterrows():
+                    try:
+                        sex_enc    = encoders["sex"].transform([row["sex"]])[0]
+                        smoker_enc = encoders["smoker"].transform([row["smoker"]])[0]
+                        region_enc = encoders["region"].transform([row["region"]])[0]
+                        age_val    = float(row["age"])
+                        bmi_val    = float(row["bmi"])
+                        children_val = int(row["children"])
+
+                        features = pd.DataFrame(
+                            [[age_val, sex_enc, bmi_val, children_val, smoker_enc, region_enc,
+                              age_val*bmi_val, smoker_enc*age_val, smoker_enc*bmi_val]],
+                            columns=["age","sex_encoded","bmi","children","smoker_encoded",
+                                     "region_encoded","age_bmi","smoker_age","smoker_bmi"]
+                        )
+                        pred = model.predict(features)[0]
+                        results_list.append(round(pred, 2))
+                    except Exception:
+                        results_list.append(None)
+
+            output_df = input_df.copy()
+            output_df["Predicted_Premium ($)"] = results_list
+
+            st.markdown("### 📊 Prediction Results")
+            st.dataframe(output_df, use_container_width=True)
+
+            # Summary stats
+            valid_preds = [p for p in results_list if p is not None]
+            c1, c2, c3, c4 = st.columns(4)
+            c1.metric("Total Records",  f"{len(output_df):,}")
+            c2.metric("Avg Premium",    f"${sum(valid_preds)/len(valid_preds):,.0f}")
+            c3.metric("Min Premium",    f"${min(valid_preds):,.0f}")
+            c4.metric("Max Premium",    f"${max(valid_preds):,.0f}")
+
+            # Download results
+            st.markdown("### 📥 Download Scanned Results")
+            dc1, dc2 = st.columns(2)
+            with dc1:
+                csv_out = output_df.to_csv(index=False).encode("utf-8")
+                st.download_button("📥 Download as CSV", csv_out,
+                                   "predictions_result.csv", "text/csv", use_container_width=True)
+            with dc2:
+                buf_out = io.BytesIO()
+                output_df.to_excel(buf_out, index=False)
+                st.download_button("📥 Download as Excel", buf_out.getvalue(),
+                                   "predictions_result.xlsx",
+                                   "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                                   use_container_width=True)
+
+        except Exception as e:
+            st.error(f"⚠️ Error processing file: {e}")
+    else:
+        st.info("💡 Upload a file above to get bulk predictions. Use the sample file as a template.")
 
 elif page == "ℹ️ About":
     st.markdown('<div class="main-header">ℹ️ About This Project</div>', unsafe_allow_html=True)
